@@ -134,26 +134,26 @@
   <!-- ===== スタート画面 ===== -->
   <section id="screen-start" class="card">
     <label for="name-input">なまえ（ランキングに表示されます）</label>
-    <input type="text" id="name-input" maxlength="20" placeholder="なまえ" autocomplete="off">
+    <input type="text" id="name-input" maxlength="20" placeholder="なまえ" autocomplete="off" required>
 
     <label id="seg-speaker-label">あなたは？</label>
     <div class="seg" id="seg-speaker" role="radiogroup" aria-labelledby="seg-speaker-label">
-      <input type="radio" name="speaker-type" id="speaker-native" value="native" class="seg-radio" checked>
+      <input type="radio" name="speaker-type" id="speaker-native" value="native" class="seg-radio" checked required>
       <label for="speaker-native" class="seg-label">日本語話者</label>
-      <input type="radio" name="speaker-type" id="speaker-learner" value="learner" class="seg-radio">
+      <input type="radio" name="speaker-type" id="speaker-learner" value="learner" class="seg-radio" required>
       <label for="speaker-learner" class="seg-label">日本語学習者</label>
     </div>
 
     <label for="country-input">出身国</label>
-    <input type="text" id="country-input" maxlength="30" placeholder="例：日本" autocomplete="off">
+    <input type="text" id="country-input" maxlength="30" placeholder="例：日本" autocomplete="off" required>
 
     <label id="seg-vision-label">視覚障害の有無</label>
     <div class="seg" id="seg-vision" role="radiogroup" aria-labelledby="seg-vision-label">
-      <input type="radio" name="vision-status" id="vision-blind" value="blind" class="seg-radio">
+      <input type="radio" name="vision-status" id="vision-blind" value="blind" class="seg-radio" required>
       <label for="vision-blind" class="seg-label">全盲</label>
-      <input type="radio" name="vision-status" id="vision-low" value="low" class="seg-radio">
+      <input type="radio" name="vision-status" id="vision-low" value="low" class="seg-radio" required>
       <label for="vision-low" class="seg-label">ロービジョン</label>
-      <input type="radio" name="vision-status" id="vision-sighted" value="sighted" class="seg-radio" checked>
+      <input type="radio" name="vision-status" id="vision-sighted" value="sighted" class="seg-radio" checked required>
       <label for="vision-sighted" class="seg-label">晴眼者</label>
     </div>
 
