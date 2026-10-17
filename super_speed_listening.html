@@ -986,7 +986,8 @@
     // VoiceOver等のスクリーンリーダーがボタン操作を読み上げる時間を確保し、
     // 例文の音声と重なって聞き取れなくなるのを防ぐための短い遅延
     setTimeout(function(){
-      speak(state.current.text, state.speed, function(){
+      // 漢字の読み間違いを避けるため、表記(text)ではなく読み(reading)をTTSに渡す
+      speak(state.current.reading, state.speed, function(){
         playBtnLabel.textContent = (state.triesInSentence < 3) ? "もう一度聴く" : "聴く権利を使い切りました";
         btnPlay.disabled = (state.triesInSentence >= 3);
         updateSubmitEnabled();
