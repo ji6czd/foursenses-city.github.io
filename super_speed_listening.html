@@ -972,7 +972,14 @@
     btnSkipSentence.disabled = false;
     btnSkipSentence.textContent = (state.sentenceIdx < 2) ? "聴き取れないので次の例文へ" : "聴き取れないので終了する";
     updateSubmitEnabled();
-    answerInput.focus();
+    focusStartPoint();
+  }
+
+  // 晴眼者以外はキーボード（スクリーンリーダー）で再生を操作する可能性が高いので、再生ボタンから始める。
+  // 再生ボタンが押せない状態のとき、および晴眼者は回答欄にフォーカスする。
+  function focusStartPoint(){
+    var target = (profile.vision !== "sighted" && !btnPlay.disabled) ? btnPlay : answerInput;
+    target.focus();
   }
 
   function playCurrent(){
@@ -983,6 +990,8 @@
     replayNote.textContent = "この例文を聴いた回数：" + state.triesInSentence + "回/3回";
     playBtnLabel.textContent = "再生中…";
     btnPlay.disabled = true;
+    // 晴眼者以外は、聞こえた端から入力できるよう、再生と同時に回答欄へフォーカスを移す
+    if (profile.vision !== "sighted") answerInput.focus();
     // VoiceOver等のスクリーンリーダーがボタン操作を読み上げる時間を確保し、
     // 例文の音声と重なって聞き取れなくなるのを防ぐための短い遅延
     setTimeout(function(){
@@ -1075,7 +1084,7 @@
         var remaining = 3 - state.triesInSentence;
         feedbackEl.textContent = "正解と一致しません。この例文はあと" + remaining + "回聴けます。";
         feedbackEl.className = "feedback wrong";
-        answerInput.value = ""; updateSubmitEnabled(); answerInput.focus();
+        answerInput.value = ""; updateSubmitEnabled(); focusStartPoint();
       } else if (state.sentenceIdx < 2){
         // この例文の3回を使い切った → 次の例文へ切り替え
         answerInput.disabled = true; btnSubmit.disabled = true;
