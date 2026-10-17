@@ -157,7 +157,7 @@
       <label for="vision-sighted" class="seg-label">晴眼者</label>
     </div>
 
-    <p class="feedback wrong" id="start-error" style="display:none;"></p>
+    <p class="feedback wrong" id="start-error" role="alert" style="min-height:0;"></p>
     <button class="primary" id="btn-start" style="margin-top:18px;">挑戦をはじめる</button>
     <button class="ghost" id="btn-show-ranking-from-start">ランキングを見る</button>
     <p class="hint">第1問は0.5倍速・100点。正解するごとに0.25倍速ずつ加速し、得点は+50点ずつ増えます（100→150→200…）。1つの例文は3回まで聴けて、聴くたびに得点が10%ずつ減ります。3回とも不正解だと別の例文に変わり、3つの例文（合計9回）を使い切ると終了です。回答はすべてひらがなで入力してください（句読点はあってもなくてもOK）。</p>
@@ -1307,12 +1307,19 @@
     var startError = el("start-error");
     var name = nameInput.value.trim();
     var country = countryInput.value.trim();
+    nameInput.setAttribute("aria-invalid", name ? "false" : "true");
+    countryInput.setAttribute("aria-invalid", country ? "false" : "true");
     if (!name || !country){
-      startError.textContent = "なまえと出身国は必ず入力してください。";
-      startError.style.display = "block";
+      // role="alert" の領域は、表示切替ではなく中身の変化で読み上げられる。
+      // 同じ文言でも毎回読み上げさせるため、いったん空にしてから設定する。
+      startError.textContent = "";
+      setTimeout(function(){
+        startError.textContent = "なまえと出身国は必ず入力してください。";
+      }, 50);
+      (name ? countryInput : nameInput).focus();
       return;
     }
-    startError.style.display = "none";
+    startError.textContent = "";
     profile.name = name;
     profile.country = country;
     state.speed = 0.5; state.levelIndex = 1; state.totalScore = 0;
